@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default async function Home() {
 
-  // const users = await fetch('http://localhost:5000/users')
+  // const users = await fetch('http://localhost:5000/students')
 
   // const {data} =await users.json()
 

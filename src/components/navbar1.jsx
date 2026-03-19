@@ -1,5 +1,5 @@
 "use client";;
-import {  Menu } from "lucide-react";
+import { Menu } from "lucide-react";
 
 import {
   Accordion,
@@ -38,8 +38,8 @@ const Navbar1 = ({
       url: "/admitStudent",
     },
     {
-      title: "Blog",
-      url: "#",
+      title: "ছাত্র সমূহ",
+      url: "/see-students",
     },
   ],
 
@@ -50,12 +50,12 @@ const Navbar1 = ({
   className
 }) => {
 
-    const {data: session} = useSession()
-  
-      // console.log(session);
+  const { data: session } = useSession()
+
+  // console.log(session?.user.image);
 
   return (
-    <section className={cn("py-4", className)}>
+    <section className={cn("py-4 border-b-2 border-b-green-500", className)}>
       <div className="container">
         {/* Desktop Menu */}
         <nav className="hidden items-center justify-between lg:flex px-4">
@@ -63,13 +63,15 @@ const Navbar1 = ({
             {/* Logo */}
 
             <Image
-              src={logo.src}
+              src={logo?.src}
               className="max-h-8 dark:invert"
               width={35}
               height={40}
               alt={logo.alt}
             />
-    <ModeToggle/>
+
+            <ModeToggle />
+
             <div className="flex items-center">
               <NavigationMenu>
                 <NavigationMenuList>
@@ -78,19 +80,34 @@ const Navbar1 = ({
               </NavigationMenu>
             </div>
           </div>
-    
+
           <div className="flex gap-2">
             {/* <Button asChild variant="outline" size="sm">
               <Link href={auth.login.url}>{auth.login.title}</Link>
             </Button> */}
-            {session ? <p>session</p> :
-            <Button asChild size="sm">
-                <Link href={auth.login.url}>{auth.login.title}</Link>
+            {session ? 
+            <div className="flex items-center gap-2">
+              <Image
+                    src={session?.user.image}
+                    alt="user image"
+                    width={30}
+                    height={30}
+                    className="rounded-full"
+                  />
+
+              <Button
+              onClick={() => signOut()}
+            >
+              লগআউট
             </Button>
+            </div>
+            
+              :
+              <Button asChild size="sm">
+                <Link href={auth.login.url}>{auth.login.title}</Link>
+              </Button>
             }
 
-            <button onClick={() => signOut()}>Sign out</button>
-            
           </div>
         </nav>
 
@@ -101,28 +118,42 @@ const Navbar1 = ({
 
             <div className="flex gap-2">
               <Image
-              src={logo.src}
-              className="max-h-8 dark:invert"
-              width={35}
-              height={40}
-              alt={logo.alt}
-            />
+                src={logo.src}
+                className="max-h-8 dark:invert"
+                width={35}
+                height={40}
+                alt={logo.alt}
+              />
 
-            <ModeToggle />
+              <ModeToggle />
             </div>
 
             <Sheet>
-              <SheetTrigger asChild>
-                <Button variant="outline" size="icon">
-                  <Menu className="size-4" />
-                </Button>
-              </SheetTrigger>
+              {
+                session?.user.image &&
+                <div className="flex items-center gap-2">
+                  <Image
+                    src={session?.user.image}
+                    alt="user image"
+                    width={30}
+                    height={30}
+                    className="rounded-full"
+                  />
+
+                  <SheetTrigger asChild>
+                    <Button variant="outline" size="icon">
+                      <Menu className="size-4" />
+                    </Button>
+                  </SheetTrigger>
+                </div>
+              }
+
               <SheetContent className="overflow-y-auto">
                 <SheetHeader>
                   <SheetTitle>
 
                     <Image
-                      src={logo.src}
+                      src={logo?.src}
                       className="max-h-8 dark:invert"
                       width={35}
                       height={40}
@@ -137,12 +168,16 @@ const Navbar1 = ({
                   </Accordion>
 
                   <div className="flex flex-col gap-3">
-                    {/* <Button asChild variant="outline">
-                      <Link href={auth.login.url}>{auth.login.title}</Link>
-                    </Button> */}
-                    <Button asChild>
-                       <Link href={auth.login.url}>{auth.login.title}</Link>
+                    {session ? <Button
+                      onClick={() => signOut()}
+                    >
+                      লগআউট
                     </Button>
+                      :
+                      <Button asChild size="sm">
+                        <Link href={auth.login.url}>{auth.login.title}</Link>
+                      </Button>
+                    }
                   </div>
                 </div>
               </SheetContent>
