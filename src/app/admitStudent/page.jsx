@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -10,7 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import baseUrl from "@/lib/axios";
 import { uploadToCloudinary } from "@/lib/imageHoster";
 import Image from "next/image";
-import { LuX } from "react-icons/lu";
+import { LuX, LuCamera, LuImage } from "react-icons/lu";
 import { useSession } from "next-auth/react";
 
 
@@ -23,8 +23,7 @@ export default function AdmitStudent() {
         formState: { errors, isSubmitting }
     } = useForm({
         defaultValues: {
-            tutionFee: 4000,
-            status: 'active'
+            tutionFee: 4000
         }
     });
 
@@ -36,6 +35,9 @@ export default function AdmitStudent() {
 
     const [preview, setPreview] = useState(null);
     const [selectedDept, setSelectedDept] = React.useState("");
+
+    const cameraRef = useRef(null);
+    const galleryRef = useRef(null);
 
     const { data: session } = useSession()
 
@@ -170,17 +172,64 @@ export default function AdmitStudent() {
                         {/* 5. ছবির লিঙ্ক */}
                         <div className="space-y-2">
                             <Label>ছবি আপলোড করুন</Label>
-                          
-                            <Input
+
+                            {/* Buttons */}
+                            <div className="flex gap-3 items-center border border-slate-200 p-1 rounded-xl">
+                                <div className="flex gap-3 items-center">
+                                      <Button
+                                    type="button"
+                                    variant="outline"
+                                    className="flex-1 gap-2"
+                                    onClick={() => cameraRef.current?.click()}
+                                >
+                                    <LuCamera /> ছবি তুলুন
+                                </Button>
+
+                                <p>অথবা</p>
+                                </div>
+                              
+
+                                <Button
+                                    type="button"
+                                    variant="outline"
+                                    className="flex-1 gap-2"
+                                    onClick={() => galleryRef.current?.click()}
+                                >
+                                    <LuImage /> গ্যালারি থেকে বাছুন
+                                </Button>
+                            </div>
+
+                            {/* 🔒 Hidden Inputs (NO register এখানে) */}
+
+                            {/* Camera */}
+                            <input
                                 type="file"
                                 accept="image/*"
                                 capture="environment"
-                                {...register("image")} // রেজিস্টার আগে থাকবে
+                                ref={cameraRef}
+                                className="hidden"
                                 onChange={(e) => {
-                                    register("image").onChange(e); // হুক ফর্মকে জানানো
-                                    handleImagePreview(e);        // প্রিভিউ দেখানো
+                                    const file = e.target.files[0];
+                                    if (file) {
+                                        setValue("image", [file]); // ✅ RHF manually set
+                                        handleImagePreview(e);
+                                    }
                                 }}
-                                className="border p-2 w-full"
+                            />
+
+                            {/* Gallery */}
+                            <input
+                                type="file"
+                                accept="image/*"
+                                ref={galleryRef}
+                                className="hidden"
+                                onChange={(e) => {
+                                    const file = e.target.files[0];
+                                    if (file) {
+                                        setValue("image", [file]); // ✅ RHF manually set
+                                        handleImagePreview(e);
+                                    }
+                                }}
                             />
 
                             {/* Preview */}
@@ -296,6 +345,6 @@ export default function AdmitStudent() {
                     </form>
                 </CardContent>
             </Card>
-        </div>
+        </div >
     );
 }

@@ -105,64 +105,63 @@ export default function StudentList({ students }) {
       </div>
 
       {/* -------- Mobile Card -------- */}
-      <div className="grid grid-cols-2 gap-4 md:hidden">
-        {students?.map((student) => (
-          <Card
-            key={student._id}
-            className="overflow-hidden border shadow-sm hover:shadow-md transition rounded-xl"
-          >
-            <CardContent className="">
-              
-              {/* Top Section */}
-              <div className="flex items-center gap-4">
-                <div className="relative h-16 w-16 rounded-xl overflow-hidden border shrink-0">
-                  <Image
-                    src={student?.image || "/placeholder-user.png"}
-                    alt={student?.name}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
+     <div className="grid grid-cols-2 gap-4 md:hidden">
+  {students?.map((student) => (
+    <Card
+      key={student._id}
+      className="overflow-hidden rounded-xl shadow-sm hover:shadow-md transition p-0"
+    >
+      <CardContent className="p-0">
+        
+        {/* 🔥 Full Width Image */}
+        <div className="relative w-full h-40">
+          <Image
+            src={student?.image || "/placeholder-user.png"}
+            alt={student?.name}
+            fill
+            className="object-cover"
+          />
+        </div>
 
-                <div className="flex-1 space-y-1">
-                  <h3 className="font-bold text-lg">
-                    {student.name}
-                  </h3>
+        {/* 🔽 Info Section */}
+        <div className="p-3 space-y-2">
+          
+          {/* Name */}
+          <h3 className="font-bold text-sm leading-tight">
+            {student.name}
+          </h3>
 
-                  <div className="flex flex-wrap gap-2 text-xs">
-                    <span className="px-2 py-1 rounded">
-                      {student.department}
-                    </span>
+          {/* Department + Class */}
+          <div className="flex flex-wrap gap-1 text-[11px]">
+            <span className="px-2 py-0.5 rounded">
+              {student.department}
+            </span>
 
-                    <span className="bg-blue-50 text-blue-700 px-2 py-1 rounded font-semibold">
-                      {student.class}
-                    </span>
-                  </div>
-                </div>
-              </div>
+            <span className="bg-blue-50 text-blue-700 px-2 py-0.5 rounded font-semibold">
+              {student.class}
+            </span>
+          </div>
 
-              {/* Bottom Section */}
-              <div className="mt-4 pt-3 border-t flex justify-between items-center">
-                <p className="text-xs text-slate-500">
-                  রক্তের গ্রুপ:{" "}
-                  <span className="font-bold text-red-600">
-                    {student.bloodGroup || "N/A"}
-                  </span>
-                </p>
+          {/* Blood */}
+          <p className="text-[11px] text-slate-500">
+            🩸{" "}
+            <span className="font-bold text-red-600">
+              {student.bloodGroup || "N/A"}
+            </span>
+          </p>
 
-                <Link href={`/student-details/${student._id}`} className="w-32">
-                  <Button
-                    size="sm"
-                    className="w-full rounded-full"
-                  >
-                    সব তথ্য...
-                  </Button>
-                </Link>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+          {/* Button */}
+          <Link href={`/student-details/${student._id}`}>
+            <Button size="sm" className="w-full rounded-full mt-2 text-xs">
+              সকল তথ্য দেখুন...
+            </Button>
+          </Link>
+
+        </div>
+      </CardContent>
+    </Card>
+  ))}
+</div>
     </div>
   );
 }

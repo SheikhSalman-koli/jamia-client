@@ -1,5 +1,5 @@
 "use client";;
-import { Menu } from "lucide-react";
+import { MapPin, Menu } from "lucide-react";
 
 import {
   Accordion,
@@ -38,7 +38,7 @@ const Navbar1 = ({
       url: "/admitStudent",
     },
     {
-      title: "ছাত্র সমূহ",
+      title: "ছাত্রদের তালিকা",
       url: "/see-students",
     },
   ],
@@ -53,6 +53,7 @@ const Navbar1 = ({
   const { data: session } = useSession()
 
   // console.log(session?.user.image);
+  const googleMapsUrl = `https://maps.app.goo.gl/KJfGnUA5cnF7K8zp8`
 
   return (
     <section className={cn("py-4 border-b-2 border-b-green-500", className)}>
@@ -70,6 +71,16 @@ const Navbar1 = ({
               alt={logo.alt}
             />
 
+            <Link
+              href={googleMapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden md:flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors"
+            >
+              <MapPin className="h-4 w-4 text-red-500" />
+              <span>লোকেশন ম্যাপ</span>
+            </Link>
+
             <ModeToggle />
 
             <div className="flex items-center">
@@ -85,23 +96,24 @@ const Navbar1 = ({
             {/* <Button asChild variant="outline" size="sm">
               <Link href={auth.login.url}>{auth.login.title}</Link>
             </Button> */}
-            {session ? 
-            <div className="flex items-center gap-2">
-              <Image
-                    src={session?.user.image}
-                    alt="user image"
-                    width={30}
-                    height={30}
-                    className="rounded-full"
-                  />
 
-              <Button
-              onClick={() => signOut()}
-            >
-              লগআউট
-            </Button>
-            </div>
-            
+            {session ?
+              <div className="flex items-center gap-2">
+                <Image
+                  src={session?.user.image}
+                  alt="user image"
+                  width={30}
+                  height={30}
+                  className="rounded-full"
+                />
+
+                <Button
+                  onClick={() => signOut()}
+                >
+                  লগআউট
+                </Button>
+              </div>
+
               :
               <Button asChild size="sm">
                 <Link href={auth.login.url}>{auth.login.title}</Link>
@@ -125,13 +137,26 @@ const Navbar1 = ({
                 alt={logo.alt}
               />
 
+              <Link
+                href={googleMapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="md:hidden"
+              >
+                <Button variant="ghost" size="icon" className="rounded-full">
+                  <MapPin className="h-5 w-5 text-red-500" />
+                </Button>
+              </Link>
+
               <ModeToggle />
             </div>
 
             <Sheet>
-              {
-                session?.user.image &&
-                <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2">
+
+                {
+                  session?.user.image &&
+
                   <Image
                     src={session?.user.image}
                     alt="user image"
@@ -139,14 +164,15 @@ const Navbar1 = ({
                     height={30}
                     className="rounded-full"
                   />
+                }
 
-                  <SheetTrigger asChild>
-                    <Button variant="outline" size="icon">
-                      <Menu className="size-4" />
-                    </Button>
-                  </SheetTrigger>
-                </div>
-              }
+                <SheetTrigger asChild>
+                  <Button variant="outline" size="icon">
+                    <Menu className="size-4" />
+                  </Button>
+                </SheetTrigger>
+              </div>
+
 
               <SheetContent className="overflow-y-auto">
                 <SheetHeader>
