@@ -4,7 +4,9 @@ import React from 'react'
 
 export default async function StudentData() {
 
-  const res = await baseUrl.get('/students')
+  const res = await baseUrl.get('/students', {
+    next: { revalidate: 10 }
+  })
 
   const {data} = res?.data
 

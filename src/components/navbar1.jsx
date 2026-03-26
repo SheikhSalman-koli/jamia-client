@@ -1,6 +1,6 @@
-"use client";;
-import { MapPin, Menu } from "lucide-react";
+"use client";
 
+import { MapPin, Menu } from "lucide-react";
 import {
   Accordion,
 } from "@/components/ui/accordion";
@@ -21,38 +21,101 @@ import {
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import { ModeToggle } from "@/myComponents/theme/ThemeToogle";
+import { useUserRole } from "@/hooks/userRole";
 
-const Navbar1 = ({
-  logo = {
+const Navbar1 = ({ className }) => {
+
+  const logo = {
     src: "https://res.cloudinary.com/dobtto17a/image/upload/v1773827388/madrasha-logo_nyskjk.jpg",
     alt: "logo",
     title: "পূর্বাচল মাদরাসা",
-  },
+  }
 
-  menu = [
-    { title: "হোম", url: "/" },
-    {
-      title: "ছাত্র ভর্তি",
-      url: "/admitStudent",
-    },
-    {
-      title: "ছাত্রদের তালিকা",
-      url: "/see-students",
-    },
-  ],
-
-  auth = {
+  const auth = {
     login: { title: "লগইন", url: "login" },
-  },
+  }
 
-  className
-}) => {
+  const {role, session} = useUserRole()
+  // console.log(role, session);
 
-  const { data: session } = useSession()
+  let menu = []
 
-  // console.log(session?.user.image);
+  switch (role) {
+    case 'super-admin':
+      menu.push(
+        {
+          title: "হোম",
+          url: "/"
+        },
+        {
+          title: "ছাত্র ভর্তি",
+          url: "/admitStudent",
+        },
+        {
+          title: "ছাত্রদের তালিকা",
+          url: "/see-students",
+        },
+        {
+          title: "শিক্ষক নিয়োগ",
+          url: "/add-teacher",
+        },
+        {
+          title: "শিক্ষকদের তালিকা",
+          url: "/teacher-list",
+        },
+        {
+          title: "রোল পরিবর্তন",
+          url: "/change-role",
+        }
+      )
+      break;
+
+    case 'admin':
+      menu.push(
+        {
+          title: "হোম",
+          url: "/"
+        },
+        {
+          title: "ছাত্র ভর্তি",
+          url: "/admitStudent",
+        },
+        {
+          title: "ছাত্রদের তালিকা",
+          url: "/see-students",
+        },
+        {
+          title: "শিক্ষকদের তালিকা",
+          url: "/teacher-list",
+        }
+      )
+      break;
+
+    case 'user':
+      menu.push(
+        {
+          title: "হোম",
+          url: "/"
+        },
+        {
+          title: "ছাত্রদের তালিকা",
+          url: "/see-students",
+        }
+      )
+      break
+
+    default:
+      menu.push(
+        {
+          title: "হোম",
+          url: "/"
+        }
+      )
+  }
+
+
   const googleMapsUrl = `https://maps.app.goo.gl/KJfGnUA5cnF7K8zp8`
 
   return (
@@ -68,7 +131,7 @@ const Navbar1 = ({
               className="max-h-8 dark:invert"
               width={35}
               height={40}
-              alt={logo.alt}
+              alt={logo?.alt}
             />
 
             <Link
@@ -130,11 +193,11 @@ const Navbar1 = ({
 
             <div className="flex gap-2">
               <Image
-                src={logo.src}
+                src={logo?.src}
                 className="max-h-8 dark:invert"
                 width={35}
                 height={40}
-                alt={logo.alt}
+                alt={logo?.alt}
               />
 
               <Link
@@ -183,7 +246,7 @@ const Navbar1 = ({
                       className="max-h-8 dark:invert"
                       width={35}
                       height={40}
-                      alt={logo.alt}
+                      alt={logo?.alt}
                     />
 
                   </SheetTitle>

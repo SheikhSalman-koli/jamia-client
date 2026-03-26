@@ -18,7 +18,7 @@ export const metadata = {
   title: "পূর্বাচল মাদরাসা",
   description: "মাদরাসা ছাত্র ভর্তি এবং একাডেমিক ম্যানেজমেন্ট সিস্টেম",
   icons: {
-    icon: "https://res.cloudinary.com/dobtto17a/image/upload/v1773827388/madrasha-logo_nyskjk.jpg",
+    icon: "madrasha-logo.jpeg",
   },
 };
 

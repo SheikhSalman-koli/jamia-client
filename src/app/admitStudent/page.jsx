@@ -12,6 +12,7 @@ import { uploadToCloudinary } from "@/lib/imageHoster";
 import Image from "next/image";
 import { LuX, LuCamera, LuImage } from "react-icons/lu";
 import { useSession } from "next-auth/react";
+import { useUserRole } from "@/hooks/userRole";
 
 
 export default function AdmitStudent() {
@@ -39,7 +40,7 @@ export default function AdmitStudent() {
     const cameraRef = useRef(null);
     const galleryRef = useRef(null);
 
-    const { data: session } = useSession()
+    const { session } = useUserRole()
 
     const onSubmit = async (data) => {
         console.log('triggered');

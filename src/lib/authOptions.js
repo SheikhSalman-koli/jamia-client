@@ -40,6 +40,23 @@ export const authOptions = {
             }
             return true;
         },
+  
+        async session({ session }) {
+            try {
+                // Fetch the latest user data from your DB using the email
+                const { data } = await baseUrl.get(`/users/byemail?email=${session?.user.email}`);
+                
+                if (data?.data) {
+                    // Inject the role from your database into the session object
+                    session.user.role = data.data.role;
+                    // You can also inject the DB ID if you need it for marketplace ads
+                    session.user.id = data.data._id; 
+                }
+            } catch (error) {
+                console.error("Error fetching role for session:", error);
+            }
+            return session;
+        },
     },
 
     pages: {
