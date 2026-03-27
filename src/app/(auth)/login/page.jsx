@@ -22,7 +22,7 @@ export default function LoginPage() {
           <Button 
             variant="outline" 
             className="w-full h-14 text-lg font-medium shadow-sm bg-white hover:bg-slate-50 transition-all border-slate-200"
-            onClick={() => signIn('google')}
+            onClick={() => signIn('google',  { callbackUrl: "/" })}
           >
             <FcGoogle className="mr-3 h-6 w-6" />
             Google দিয়ে লগইন করুন

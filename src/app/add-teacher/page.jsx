@@ -49,7 +49,7 @@ export default function TeacherForm() {
                 ...data,
                 image: imageUrl,
                 addedBy: session?.user?.name,
-                // joiningDate: new Date().toISOString().split("T")[0]
+                joiningDate: new Date().toISOString().split("T")[0]
             };
 
               await baseUrl.post("/teachers", finalData);

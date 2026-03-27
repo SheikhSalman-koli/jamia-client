@@ -2,11 +2,11 @@ import baseUrl from '@/lib/axios';
 import StudentList from '@/myComponents/StudentManagment/StudentList';
 import React from 'react'
 
+export const dynamic = "force-dynamic";
+
 export default async function StudentData() {
 
-  const res = await baseUrl.get('/students', {
-    next: { revalidate: 10 }
-  })
+  const res = await baseUrl.get('/students')
 
   const {data} = res?.data
 

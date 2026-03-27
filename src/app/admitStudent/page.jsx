@@ -318,8 +318,8 @@ export default function AdmitStudent() {
                             <Select onValueChange={(v) => setValue("type", v)}>
                                 <SelectTrigger className='w-full px-2'><SelectValue placeholder="ধরন নির্বাচন করুন" /></SelectTrigger>
                                 <SelectContent className='w-full px-2'>
-                                    <SelectItem value="আবাসিক">নতুন</SelectItem>
-                                    <SelectItem value="অনাবাসিক">পুরাতন</SelectItem>
+                                    <SelectItem value="নতুন">নতুন</SelectItem>
+                                    <SelectItem value="পুরাতন">পুরাতন</SelectItem>
                                 </SelectContent>
                             </Select>
                             <input type="hidden" {...register("type", { required: "ক্যাটাগরি আবশ্যক" })} />

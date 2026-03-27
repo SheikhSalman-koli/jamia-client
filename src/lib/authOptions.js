@@ -27,7 +27,7 @@ export const authOptions = {
                     }
 
                     const {data} = await baseUrl.get(`/users/byemail?email=${userData.email}`)
-               
+
                     if(!data?.data){
                         await baseUrl.post(`/users`, userData);
                     }
@@ -35,7 +35,6 @@ export const authOptions = {
                     return true; // লগইন সাকসেস
                 } catch (error) {
                     console.error("Error saving user to DB:", error);
-                    return false; // ডাটাবেজে সেভ না হলে লগইন হবে না
                 }
             }
             return true;

@@ -37,8 +37,8 @@ const Navbar1 = ({ className }) => {
     login: { title: "লগইন", url: "login" },
   }
 
-  const {role, session} = useUserRole()
-  // console.log(role, session);
+  const { role, session } = useUserRole()
+  // console.log( session);
 
   let menu = []
 
@@ -68,6 +68,10 @@ const Navbar1 = ({ className }) => {
         {
           title: "রোল পরিবর্তন",
           url: "/change-role",
+        },
+        {
+          title: "পরিসংখ্যান",
+          url: "/stats",
         }
       )
       break;
@@ -89,6 +93,10 @@ const Navbar1 = ({ className }) => {
         {
           title: "শিক্ষকদের তালিকা",
           url: "/teacher-list",
+        },
+        {
+          title: "পরিসংখ্যান",
+          url: "/stats",
         }
       )
       break;
@@ -102,6 +110,10 @@ const Navbar1 = ({ className }) => {
         {
           title: "ছাত্রদের তালিকা",
           url: "/see-students",
+        },
+        {
+          title: "পরিসংখ্যান",
+          url: "/stats",
         }
       )
       break
