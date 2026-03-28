@@ -33,28 +33,28 @@ export default async function StudentDetails({ params }) {
                     <CardContent className="pt-8 flex flex-col items-center">
                         <div className="relative h-48 w-48 rounded-2xl overflow-hidden border-4 border-white shadow-xl mb-4">
                             <Image
-                                src={student.image}
-                                alt={student.name}
+                                src={student?.image}
+                                alt={student?.name}
                                 fill
                                 className="object-cover"
                             />
                         </div>
-                        <h1 className="text-2xl font-bold text-slate-800">{student.name}</h1>
-                        <p className="text-slate-500 mb-4">{student.class} | {student.department}</p>
+                        <h1 className="text-2xl font-bold text-slate-800">{student?.name} <span className="text-xl font-bold text-slate-800">({student?.type})</span></h1>
+                        <p className="text-slate-500 mb-4">{student?.class} | {student?.department}</p>
                         <Badge className="px-4 py-1 text-sm bg-green-100 text-green-700 hover:bg-green-100 border-none">
-                            {student.status}
+                            {student?.status}
                         </Badge>
 
                         <div className="w-full mt-8 space-y-4 border-t pt-6">
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-3 text-slate-600">
                                     <Phone className="h-4 w-4 text-primary" />
-                                    <span>{student.phone}</span>
+                                    <span>{student?.phone}</span>
                                 </div>
 
                                 {/* Call Button */}
                                 <a
-                                    href={`tel:${student.phone}`}
+                                    href={`tel:${student?.phone}`}
                                     className="text-sm bg-green-100 text-green-700 px-3 py-1 rounded-full hover:bg-green-200 transition"
                                 >
                                     📞 Call
@@ -62,8 +62,9 @@ export default async function StudentDetails({ params }) {
                             </div>
                             <div className="flex items-center gap-3 text-slate-600">
                                 <Droplet className="h-4 w-4 text-red-500" />
-                                <span>রক্তের গ্রুপ: <span className="font-bold">{student.bloodGroup}</span></span>
+                                <span>রক্তের গ্রুপ: <span className="font-bold">{student?.bloodGroup}</span></span>
                             </div>
+                            
                         </div>
                     </CardContent>
                 </Card>
@@ -81,19 +82,19 @@ export default async function StudentDetails({ params }) {
                         <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6">
                             <div>
                                 <Label className="text-slate-400">বিভাগ</Label>
-                                <p className="font-semibold text-slate-700">{student.department}</p>
+                                <p className="font-semibold text-slate-700">{student?.department}</p>
                             </div>
                             <div>
                                 <Label className="text-slate-400">জামাত/শ্রেণী</Label>
-                                <p className="font-semibold text-slate-700">{student.class}</p>
+                                <p className="font-semibold text-slate-700">{student?.class}</p>
                             </div>
                             <div>
                                 <Label className="text-slate-400">ক্যাটাগরি</Label>
-                                <p className="font-semibold text-slate-700">{student.category}</p>
+                                <p className="font-semibold text-slate-700">{student?.category}</p>
                             </div>
                             <div>
                                 <Label className="text-slate-400">নির্ধারিত খোরাকী/ফি</Label>
-                                <p className="font-semibold text-slate-700 text-blue-600">{student.definedFee} টাকা</p>
+                                <p className="font-semibold text-slate-700 text-blue-600">{student?.definedFee} টাকা</p>
                             </div>
                         </CardContent>
                     </Card>
@@ -108,15 +109,15 @@ export default async function StudentDetails({ params }) {
                         <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6">
                             <div>
                                 <Label className="text-slate-400">পিতার নাম</Label>
-                                <p className="font-semibold text-slate-700">{student.fatherName}</p>
+                                <p className="font-semibold text-slate-700">{student?.fatherName}</p>
                             </div>
                             <div>
                                 <Label className="text-slate-400">ছাত্রের NID/জন্ম নিবন্ধন</Label>
-                                <p className="font-semibold text-slate-700">{student.nid}</p>
+                                <p className="font-semibold text-slate-700">{student?.nid}</p>
                             </div>
                             <div>
                                 <Label className="text-slate-400">পিতার NID</Label>
-                                <p className="font-semibold text-slate-700">{student.fatherNid}</p>
+                                <p className="font-semibold text-slate-700">{student?.fatherNid}</p>
                             </div>
                         </CardContent>
                     </Card>
@@ -131,11 +132,11 @@ export default async function StudentDetails({ params }) {
                         <CardContent className="space-y-4 pt-6">
                             <div>
                                 <Label className="text-slate-400">স্থায়ী ঠিকানা</Label>
-                                <p className="text-slate-700">{student.permanentAddress}</p>
+                                <p className="text-slate-700">{student?.permanentAddress}</p>
                             </div>
                             <div className="pt-2 border-t">
                                 <Label className="text-slate-400">অস্থায়ী ঠিকানা</Label>
-                                <p className="text-slate-700">{student.temporaryAddress}</p>
+                                <p className="text-slate-700">{student?.temporaryAddress}</p>
                             </div>
                         </CardContent>
                     </Card>

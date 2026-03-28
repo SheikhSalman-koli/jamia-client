@@ -59,7 +59,7 @@ export default function AdmitStudent() {
                 addedBy: session?.user?.name,
                 createdAt: new Date().toISOString()
             };
-            console.log(finalData);
+            // console.log(finalData);
             // save to DB
             await baseUrl.post("/students", finalData);
             alert("ভর্তি সফল হয়েছে!");
@@ -77,8 +77,6 @@ export default function AdmitStudent() {
             setPreview(URL.createObjectURL(file));
         }
     };
-
-
 
     return (
         <div className="container mx-auto py-10 p-4 ">

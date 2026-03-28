@@ -4,9 +4,13 @@ import React from 'react'
 
 export const dynamic = "force-dynamic";
 
-export default async function StudentData() {
+export default async function StudentData(props) {
 
-  const res = await baseUrl.get('/students')
+  const searchParams = await props.searchParams;
+
+  const res = await baseUrl.get('/students',{
+    params: searchParams
+  })
 
   const {data} = res?.data
 
@@ -16,6 +20,7 @@ export default async function StudentData() {
     <div>
       <StudentList 
       students={data}
+      searchParams={searchParams}
       />
     </div>
   )

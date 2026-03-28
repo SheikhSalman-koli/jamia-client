@@ -14,8 +14,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Eye } from "lucide-react";
+import StudentFilters from "./SearchStudent";
 
-export default function StudentList({ students }) {
+export default function StudentList({ students, searchParams }) {
   return (
     <div className="container mx-auto py-4 px-4">
       
@@ -27,6 +28,10 @@ export default function StudentList({ students }) {
         <p className="text-sm text-muted-foreground">
           মোট ছাত্র: {students?.length || 0}
         </p>
+      </div>
+
+      <div className="my-2">
+        <StudentFilters/>
       </div>
 
       {/* Empty State */}
@@ -132,12 +137,12 @@ export default function StudentList({ students }) {
           </h3>
 
           {/* Department + Class */}
-          <div className="flex flex-wrap gap-1 text-[11px]">
-            <span className="px-2 py-0.5 rounded">
-              {student.department}
+          <div className="flex flex-wrap gap-2 text-[11px]">
+            <span className=" py-0.5 rounded">
+              {student.department}:
             </span>
 
-            <span className="bg-blue-50 text-blue-700 px-2 py-0.5 rounded font-semibold">
+            <span className="bg-blue-50 text-blue-700  py-0.5 rounded font-semibold">
               {student.class}
             </span>
           </div>

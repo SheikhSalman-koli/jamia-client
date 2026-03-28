@@ -67,7 +67,7 @@ const Navbar1 = ({ className }) => {
         },
         {
           title: "রোল পরিবর্তন",
-          url: "/change-role",
+          url: "/all-user",
         },
         {
           title: "পরিসংখ্যান",
