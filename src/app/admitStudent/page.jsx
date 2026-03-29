@@ -11,7 +11,6 @@ import baseUrl from "@/lib/axios";
 import { uploadToCloudinary } from "@/lib/imageHoster";
 import Image from "next/image";
 import { LuX, LuCamera, LuImage } from "react-icons/lu";
-import { useSession } from "next-auth/react";
 import { useUserRole } from "@/hooks/userRole";
 
 
@@ -46,7 +45,7 @@ export default function AdmitStudent() {
         console.log('triggered');
         try {
             let imageUrl = "";
-
+           
             if (data.image && data.image.length > 0) {
                 const file = data.image[0];
                 imageUrl = await uploadToCloudinary(file);
@@ -194,7 +193,7 @@ export default function AdmitStudent() {
                                     className="flex-1 gap-2"
                                     onClick={() => galleryRef.current?.click()}
                                 >
-                                    <LuImage /> গ্যালারি থেকে বাছুন
+                                    <LuImage /> গ্যালারি
                                 </Button>
                             </div>
 
@@ -272,6 +271,7 @@ export default function AdmitStudent() {
                                     <SelectItem value="O-">O-</SelectItem>
                                     <SelectItem value="AB+">AB+</SelectItem>
                                     <SelectItem value="AB-">AB-</SelectItem>
+                                    <SelectItem value="জানা নেই">জানা নেই</SelectItem>
                                 </SelectContent>
                             </Select>
                             {/* React Hook Form-এ ভ্যালু পাঠানোর জন্য হিডেন ইনপুট */}
@@ -288,13 +288,13 @@ export default function AdmitStudent() {
                         {/* 9. স্টুডেন্ট এনআইডি (NID) */}
                         <div className="space-y-2">
                             <Label>ছাত্রের এনআইডি / জন্ম নিবন্ধন</Label>
-                            <Input type="number" {...register("nid", { required: "NID আবশ্যক" })} />
+                            <Input {...register("nid", { required: "NID আবশ্যক" })} />
                         </div>
 
                         {/* 10. পিতার এনআইডি (Father NID) */}
                         <div className="space-y-2">
                             <Label>পিতার এনআইডি</Label>
-                            <Input type="number" {...register("fatherNid", { required: "পিতার NID আবশ্যক" })} />
+                            <Input {...register("fatherNid", { required: "পিতার NID আবশ্যক" })} />
                         </div>
 
                         {/* 11. ক্যাটাগরি */}

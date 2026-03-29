@@ -19,7 +19,7 @@ import StudentFilters from "./SearchStudent";
 export default function StudentList({ students, searchParams }) {
   return (
     <div className="container mx-auto py-4 px-4">
-      
+
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl md:text-3xl font-bold ">
@@ -31,7 +31,7 @@ export default function StudentList({ students, searchParams }) {
       </div>
 
       <div className="my-2">
-        <StudentFilters/>
+        <StudentFilters />
       </div>
 
       {/* Empty State */}
@@ -110,63 +110,66 @@ export default function StudentList({ students, searchParams }) {
       </div>
 
       {/* -------- Mobile Card -------- */}
-     <div className="grid grid-cols-2 gap-4 md:hidden">
-  {students?.map((student) => (
-    <Card
-      key={student._id}
-      className="overflow-hidden rounded-xl shadow-sm hover:shadow-md transition p-0"
-    >
-      <CardContent className="p-0">
-        
-        {/* 🔥 Full Width Image */}
-        <div className="relative w-full h-40">
-          <Image
-            src={student?.image || "/placeholder-user.png"}
-            alt={student?.name}
-            fill
-            className="object-cover"
-          />
-        </div>
+      <div className="grid grid-cols-2 gap-4 md:hidden">
+        {students?.map((student) => (
+          <Card
+            key={student._id}
+            className="overflow-hidden rounded-xl shadow-sm hover:shadow-md transition p-0"
+          >
+            <CardContent className="p-0">
 
-        {/* 🔽 Info Section */}
-        <div className="p-3 space-y-2">
-          
-          {/* Name */}
-          <h3 className="font-bold text-sm leading-tight">
-            {student.name}
-          </h3>
+              {/* 🔥 Full Width Image */}
+              <div className="relative w-full h-40">
+                <Image
+                  src={student?.image || "/placeholder-user.png"}
+                  alt={student?.name}
+                  fill
+                  className="object-cover"
+                />
+              </div>
 
-          {/* Department + Class */}
-          <div className="flex flex-wrap gap-2 text-[11px]">
-            <span className=" py-0.5 rounded">
-              {student.department}:
-            </span>
+              {/* 🔽 Info Section */}
+              <div className="p-3 space-y-2">
 
-            <span className="bg-blue-50 text-blue-700  py-0.5 rounded font-semibold">
-              {student.class}
-            </span>
-          </div>
+                {/* Name */}
+                <h3 className="font-bold text-sm leading-tight">
+                  {student.name.length > 22
+                    ? `${student.name.slice(0, 22)}...`
+                    : student.name
+                  }
+                </h3>
 
-          {/* Blood */}
-          <p className="text-[11px] text-slate-500">
-            🩸{" "}
-            <span className="font-bold text-red-600">
-              {student.bloodGroup || "N/A"}
-            </span>
-          </p>
+                {/* Department + Class */}
+                <div className="flex flex-wrap gap-2 text-[11px]">
+                  <span className=" py-0.5 rounded">
+                    {student.department}:
+                  </span>
 
-          {/* Button */}
-          <Link href={`/student-details/${student._id}`}>
-            <Button size="sm" className="w-full rounded-full mt-2 text-xs">
-              সকল তথ্য দেখুন...
-            </Button>
-          </Link>
+                  <span className="bg-blue-50 text-blue-700  py-0.5 rounded font-semibold">
+                    {student.class}
+                  </span>
+                </div>
 
-        </div>
-      </CardContent>
-    </Card>
-  ))}
-</div>
+                {/* Blood */}
+                <p className="text-[11px] text-slate-500">
+                  🩸{" "}
+                  <span className="font-bold text-red-600">
+                    {student.bloodGroup || "N/A"}
+                  </span>
+                </p>
+
+                {/* Button */}
+                <Link href={`/student-details/${student._id}`}>
+                  <Button size="sm" className="w-full rounded-full mt-2 text-xs">
+                    সকল তথ্য দেখুন...
+                  </Button>
+                </Link>
+
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
     </div>
   );
 }

@@ -3,8 +3,7 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Users, UserPlus, UserCheck, CalendarDays, GraduationCap, School } from "lucide-react";
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import { Users, UserPlus, UserCheck, CalendarDays, GraduationCap, School, Banknote } from "lucide-react";
 import AdmissionChart from "./DailyTrand";
 
 export default function StudentAnalytics({ stats }) {
@@ -30,31 +29,46 @@ export default function StudentAnalytics({ stats }) {
           icon={<Users className="h-5 w-5 text-blue-600" />}
           description="সর্বমোট রেজিস্টার্ড"
         />
-        <StatCard 
-          title="আজকের ভর্তি" 
-          value={summary.todayAdmitted} 
-          icon={<CalendarDays className="h-5 w-5 text-orange-600" />}
-          description="গত ২৪ ঘণ্টায়"
-        />
-        <StatCard 
+          <StatCard 
           title="নতুন শিক্ষার্থী" 
-          value={summary.newStudents} 
+          value={summary.totalNewStudents} 
           icon={<UserPlus className="h-5 w-5 text-green-600" />}
           description="চলতি শিক্ষাবর্ষ"
         />
         <StatCard 
           title="পুরাতন শিক্ষার্থী" 
-          value={summary.oldStudents} 
+          value={summary.totalOldStudents} 
           icon={<UserCheck className="h-5 w-5 text-indigo-600" />}
           description="বিগত শিক্ষাবর্ষ"
+        />
+         <StatCard 
+          title="খোরাকীর টাকা" 
+          value={summary.totalKhurakiAmount} 
+          icon={<Banknote className="h-5 w-5 text-indigo-600" />}
+          description="ধার্যকৃত সর্বমোট পরিমাণ"
+        />
+        <StatCard 
+          title="আজকের সর্বমোট ভর্তি" 
+          value={summary.todayAdmitted} 
+          icon={<CalendarDays className="h-5 w-5 text-orange-600" />}
+          description="গত ২৪ ঘণ্টায়"
+        />
+        <StatCard 
+          title="আজকে নতুন ভর্তি" 
+          value={summary.totalNewStudents} 
+          icon={<UserPlus className="h-5 w-5 text-orange-600" />}
+          description="গত ২৪ ঘণ্টায়"
+        />
+        <StatCard 
+          title="আজকে পুরাতন ভর্তি" 
+          value={summary.totalOldStudents} 
+          icon={<UserCheck className="h-5 w-5 text-orange-600" />}
+          description="গত ২৪ ঘণ্টায়"
         />
       </div>
 
       <div className="grid gap-6 lg:grid-cols-7">
-        {/* Admission Trend Chart */}
-        <AdmissionChart 
-        dailyData={dailyData}
-        />
+        
 
         {/* Detailed Tabs (Dept & Class) */}
         <Card className="lg:col-span-3 shadow-sm border-none">
@@ -79,6 +93,11 @@ export default function StudentAnalytics({ stats }) {
             </CardContent>
           </Tabs>
         </Card>
+
+        {/* Admission Trend Chart */}
+        <AdmissionChart 
+        dailyData={dailyData}
+        />
       </div>
     </div>
   );
