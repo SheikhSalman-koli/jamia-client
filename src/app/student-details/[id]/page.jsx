@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Phone, MapPin, User, GraduationCap, Droplet } from "lucide-react";
 import baseUrl from "@/lib/axios";
 import EditSectionDialog from "@/myComponents/StudentManagment/UpdateModal";
+import DeleteStudentButton from "@/myComponents/StudentManagment/DeleteStudent";
 
 
 export default async function StudentDetails({ params }) {
@@ -228,6 +229,11 @@ export default async function StudentDetails({ params }) {
 
                 </div>
             </div>
+
+            <DeleteStudentButton
+           studentId={student._id} 
+           studentName={student.name}
+        />
         </div>
     );
 }

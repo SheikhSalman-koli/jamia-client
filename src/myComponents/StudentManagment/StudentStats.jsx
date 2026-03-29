@@ -3,16 +3,20 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Users, UserPlus, UserCheck, CalendarDays, GraduationCap, School, Banknote } from "lucide-react";
+import { Users, UserPlus, UserCheck, CalendarDays, GraduationCap, School, Banknote, AlertTriangle } from "lucide-react";
 import AdmissionChart from "./DailyTrand";
 
 export default function StudentAnalytics({ stats }) {
-    console.log(stats);
+    // console.log(stats);
   // ডাটা ডেস্ট্রাকচারিং
   const summary = stats?.summary || {};
   const dailyData = stats?.dailyTrend || [];
   const deptData = stats?.byDepartment || [];
   const classData = stats?.byClass || [];
+
+  // console.log(summary.todayAdmitted);
+  // console.log(summary.todayNewAdmitted);
+  console.log(summary.totalCost - summary.totalKhurakiAmount);
 
   return (
     <div className="p-4 md:p-8 space-y-8 bg-slate-50/50 min-h-screen">
@@ -42,10 +46,22 @@ export default function StudentAnalytics({ stats }) {
           description="বিগত শিক্ষাবর্ষ"
         />
          <StatCard 
-          title="খোরাকীর টাকা" 
+          title="মোট খরচ" 
+          value={`${summary.totalCost} ৳`} 
+          icon={<Banknote className="h-5 w-5 text-indigo-600" />}
+          description={`${summary.totalStudents} * ${summary.totalCost / summary.totalStudents} টাকা (প্রতি শিক্ষার্থী)`}
+        />
+         <StatCard 
+          title="ধার্যকৃত খোরাকীর টাকা" 
           value={summary.totalKhurakiAmount} 
           icon={<Banknote className="h-5 w-5 text-indigo-600" />}
           description="ধার্যকৃত সর্বমোট পরিমাণ"
+        />
+         <StatCard 
+          title="ঘাটতি আছে" 
+          value={summary.totalCost - summary.totalKhurakiAmount} 
+          icon={<AlertTriangle className="h-5 w-5 text-red-600" />}
+          description="যাকাত থেকে খরচ হবে"
         />
         <StatCard 
           title="আজকের সর্বমোট ভর্তি" 
@@ -55,13 +71,13 @@ export default function StudentAnalytics({ stats }) {
         />
         <StatCard 
           title="আজকে নতুন ভর্তি" 
-          value={summary.totalNewStudents} 
+          value={summary.todayNewAdmitted} 
           icon={<UserPlus className="h-5 w-5 text-orange-600" />}
           description="গত ২৪ ঘণ্টায়"
         />
         <StatCard 
           title="আজকে পুরাতন ভর্তি" 
-          value={summary.totalOldStudents} 
+          value={summary.todayOldAdmitted} 
           icon={<UserCheck className="h-5 w-5 text-orange-600" />}
           description="গত ২৪ ঘণ্টায়"
         />

@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 
 export default function AdmissionChart({ dailyData }) {
-    console.log(dailyData);
+    // console.log(dailyData);
   // মাউন্টিং চেকের জন্য সহজ ও সঠিক উপায়
   const [hasMounted, setHasMounted] = useState(false);
 

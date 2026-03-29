@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 
 export default async function Stats() {
 
-    const res =await baseUrl.get('/students/student/stats')
+    const res = await baseUrl.get('/students/student/stats')
 
     const {data} = res?.data
 

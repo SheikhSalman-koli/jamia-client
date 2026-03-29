@@ -55,8 +55,7 @@ export default function AdmitStudent() {
                 ...data,
                 image: imageUrl,
                 status: 'সক্রিয়',
-                addedBy: session?.user?.name,
-                createdAt: new Date().toISOString()
+                addedBy: session?.user?.name || "অজানা"
             };
             // console.log(finalData);
             // save to DB

@@ -11,6 +11,7 @@ import baseUrl from "@/lib/axios";
 import { useRouter } from "next/navigation";
 import { uploadToCloudinary } from "@/lib/imageHoster";
 import { getPublicIdFromUrl } from "@/lib/getPublicIdFromUrl";
+import { useUserRole } from "@/hooks/userRole";
 
 
 export default function EditSectionDialog({ studentId, title, fields, initialData, isImage = false }) {
@@ -24,68 +25,77 @@ export default function EditSectionDialog({ studentId, title, fields, initialDat
     const galleryRef = useRef(null);
     const router = useRouter();
 
+    const { role } = useUserRole()
+
     // ইমেজ প্রিভিউ এবং ফাইল সিলেক্ট হ্যান্ডলার
-   const handleImagePreview = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-        setSelectedFile(file);
-        
-        // Use this instead of FileReader for better performance
-        const objectUrl = URL.createObjectURL(file);
-        setPreview(objectUrl);
+    const handleImagePreview = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setSelectedFile(file);
 
-        // Clean up memory when component unmounts or preview changes
-        return () => URL.revokeObjectURL(objectUrl);
-    }
-};
+            // Use this instead of FileReader for better performance
+            const objectUrl = URL.createObjectURL(file);
+            setPreview(objectUrl);
 
-   const handleUpdate = async () => {
-    setLoading(true);
-    try {
-        let finalUpdateData = { ...formData };
-        const oldImageUrl = initialData?.image; // আগের ইমেজের ইউআরএল
-
-        if (isImage && selectedFile) {
-            // ১. নতুন ইমেজ আপলোড
-            const newImageUrl = await uploadToCloudinary(selectedFile);
-            finalUpdateData.image = newImageUrl;
-
-            // ২. যদি নতুন ইমেজ সফলভাবে আপলোড হয়, তবেই পুরনোটি ডিলিট হবে
-            if (oldImageUrl && oldImageUrl.includes("cloudinary")) {
-                const publicId = getPublicIdFromUrl(oldImageUrl);
-                
-                // আপনার তৈরি করা API রুটে কল করুন
-                await fetch("/api/cloudinary/delete", {
-                    method: "POST",
-                    body: JSON.stringify({ publicId }),
-                });
-            }
+            // Clean up memory when component unmounts or preview changes
+            return () => URL.revokeObjectURL(objectUrl);
         }
+    };
 
-        // ৩. ডাটাবেজে আপডেট পাঠানো
-        await baseUrl.patch(`/students/update/${studentId}`, finalUpdateData);
-        
-        alert("তথ্য এবং ছবি সফলভাবে আপডেট হয়েছে!");
-        setOpen(false);
-        router.refresh();
-    } catch (error) {
-        console.error("Update failed:", error);
-        alert("আপডেট করতে সমস্যা হয়েছে।");
-    } finally {
-        setLoading(false);
-    }
-};
+    const handleUpdate = async () => {
+        setLoading(true);
+        try {
+            let finalUpdateData = { ...formData };
+            const oldImageUrl = initialData?.image; // আগের ইমেজের ইউআরএল
+
+            if (isImage && selectedFile) {
+                // ১. নতুন ইমেজ আপলোড
+                const newImageUrl = await uploadToCloudinary(selectedFile);
+                finalUpdateData.image = newImageUrl;
+
+                // ২. যদি নতুন ইমেজ সফলভাবে আপলোড হয়, তবেই পুরনোটি ডিলিট হবে
+                if (oldImageUrl && oldImageUrl.includes("cloudinary")) {
+                    const publicId = getPublicIdFromUrl(oldImageUrl);
+
+                    // আপনার তৈরি করা API রুটে কল করুন
+                    await fetch("/api/cloudinary/delete", {
+                        method: "POST",
+                        body: JSON.stringify({ publicId }),
+                    });
+                }
+            }
+
+            // ৩. ডাটাবেজে আপডেট পাঠানো
+            await baseUrl.patch(`/students/update/${studentId}`, finalUpdateData);
+
+            alert("তথ্য এবং ছবি সফলভাবে আপডেট হয়েছে!");
+            setOpen(false);
+            router.refresh();
+        } catch (error) {
+            console.error("Update failed:", error);
+            alert("আপডেট করতে সমস্যা হয়েছে।");
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <Dialog open={open} onOpenChange={(val) => {
             setOpen(val);
             if (!val) { setPreview(null); setSelectedFile(null); } // ডায়ালগ বন্ধ করলে স্টেট রিসেট
         }}>
-            <DialogTrigger asChild>
-                <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full hover:bg-slate-100">
-                    {isImage ? <Camera className="h-4 w-4 text-slate-500" /> : <Pencil className="h-3.5 w-3.5 text-slate-400" />}
-                </Button>
-            </DialogTrigger>
+
+            {(role === "admin" || role === "super-admin") && (
+                <DialogTrigger asChild>
+                    <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full hover:bg-slate-100">
+                        {isImage ? (
+                            <Camera className="h-4 w-4 text-slate-500" />
+                        ) : (
+                            <Pencil className="h-3.5 w-3.5 text-slate-400" />
+                        )}
+                    </Button>
+                </DialogTrigger>
+            )}
 
             <DialogContent className="sm:max-w-100">
                 <DialogHeader>

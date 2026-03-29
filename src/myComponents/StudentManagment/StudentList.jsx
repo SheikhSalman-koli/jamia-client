@@ -170,6 +170,7 @@ export default function StudentList({ students, searchParams }) {
           </Card>
         ))}
       </div>
+
     </div>
   );
 }
