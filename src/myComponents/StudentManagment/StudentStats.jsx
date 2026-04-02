@@ -14,10 +14,6 @@ export default function StudentAnalytics({ stats }) {
   const deptData = stats?.byDepartment || [];
   const classData = stats?.byClass || [];
 
-  // console.log(summary.todayAdmitted);
-  // console.log(summary.todayNewAdmitted);
-  console.log(summary.totalCost - summary.totalKhurakiAmount);
-
   return (
     <div className="p-4 md:p-8 space-y-8 bg-slate-50/50 min-h-screen">
       <div className="flex flex-col gap-2">

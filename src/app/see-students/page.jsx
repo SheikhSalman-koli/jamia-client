@@ -8,19 +8,19 @@ export default async function StudentData(props) {
 
   const searchParams = await props.searchParams;
 
-  const res = await baseUrl.get('/students',{
+  const res = await baseUrl.get('/students', {
     params: searchParams
   })
 
-  const {data} = res?.data
+  const { data } = res?.data
 
   // console.log(data);
 
   return (
     <div>
-      <StudentList 
-      students={data}
-      searchParams={searchParams}
+      <StudentList
+        data={data}
+        searchParams={searchParams}
       />
     </div>
   )

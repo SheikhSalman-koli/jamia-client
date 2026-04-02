@@ -15,8 +15,15 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Eye } from "lucide-react";
 import StudentFilters from "./SearchStudent";
+import { StudentPagination } from "./StudentPagination";
 
-export default function StudentList({ students, searchParams }) {
+
+
+export default function StudentList({ data, searchParams }) {
+
+  const {students, meta} = data || {};
+  // console.log(meta);
+
   return (
     <div className="container mx-auto py-4 px-4">
 
@@ -26,7 +33,7 @@ export default function StudentList({ students, searchParams }) {
           🎓 ছাত্র তালিকা
         </h2>
         <p className="text-sm text-muted-foreground">
-          মোট ছাত্র: {students?.length || 0}
+          মোট ছাত্র: {meta?.total || 0}
         </p>
       </div>
 
@@ -107,10 +114,17 @@ export default function StudentList({ students, searchParams }) {
             ))}
           </TableBody>
         </Table>
+
+            <StudentPagination 
+            totalPages={meta?.totalPages || 1}
+            />
       </div>
 
       {/* -------- Mobile Card -------- */}
-      <div className="grid grid-cols-2 gap-4 md:hidden">
+      <div className="md:hidden">
+        
+      
+      <div className="grid grid-cols-2 gap-4 ">
         {students?.map((student) => (
           <Card
             key={student._id}
@@ -169,6 +183,10 @@ export default function StudentList({ students, searchParams }) {
             </CardContent>
           </Card>
         ))}
+      </div>
+ <StudentPagination 
+            totalPages={meta?.totalPages || 1}
+            />
       </div>
 
     </div>

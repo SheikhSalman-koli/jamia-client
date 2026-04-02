@@ -4,10 +4,15 @@ import { Trash2, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import baseUrl from "@/lib/axios";
+import { useUserRole } from "@/hooks/userRole";
 
 export default function DeleteStudentButton({ studentId, studentName }) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+
+  const {role} = useUserRole()
+
+  if(role === 'user') return null
 
   const handleDelete = async () => {
     // 1. Ask for confirmation

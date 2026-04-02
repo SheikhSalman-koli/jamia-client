@@ -28,7 +28,7 @@ export default function AdmitStudent() {
     });
 
     const classesByDept = {
-        "মক্তব বিভাগ": ["শিশু শ্রেণী", "১ম শ্রেণী", "২য় শ্রেণী", "৩য় শ্রেণী"],
+        "মক্তব বিভাগ": ["শিশু শ্রেণী", "১ম শ্রেণী", "২য় শ্রেণী", "৩য় শ্রেণী", "নাজেরা"],
         "হিফজ বিভাগ": ["হিফজ খানা"],
         "কিতাব বিভাগ": ["৪র্থ শ্রেণী", "তাইসির", "মিযান", "নাহবেমীর", "হেদায়াতুন্নাহু", "কাফিয়া", "শরহে বেকায়া", "জালালাইন", "মেশকাত", "দাওরা"]
     };
@@ -42,7 +42,6 @@ export default function AdmitStudent() {
     const { session } = useUserRole()
 
     const onSubmit = async (data) => {
-        console.log('triggered');
         try {
             let imageUrl = "";
            

@@ -234,6 +234,7 @@ export default async function StudentDetails({ params }) {
            studentId={student._id} 
            studentName={student.name}
         />
+
         </div>
     );
 }

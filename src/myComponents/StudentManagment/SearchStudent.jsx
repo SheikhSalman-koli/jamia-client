@@ -159,7 +159,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { Search, RotateCcw, SlidersHorizontal, ChevronUp } from "lucide-react";
+import { Search, RotateCcw, SlidersHorizontal, ChevronUp, Banknote } from "lucide-react";
 
 export default function StudentFilters() {
   const [showFilters, setShowFilters] = useState(false);
@@ -169,6 +169,8 @@ export default function StudentFilters() {
 
   const handleFilter = useDebouncedCallback((key, value) => {
     const params = new URLSearchParams(searchParams);
+    // নতুন ফিল্টার সিলেক্ট করলে পেজ ১ এ পাঠিয়ে দেওয়া ভালো
+  params.set("page", "1");
     if (value && value !== "all") {
       params.set(key, value);
     } else {
@@ -249,7 +251,7 @@ export default function StudentFilters() {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">ক্লাস</SelectItem>
-                {["শিশু শ্রেণী", "১ম শ্রেণী", "২য় শ্রেণী", "৩য় শ্রেণী", "হিফজ খানা", "৪র্থ শ্রেণী", "তাইসির", "মিযান", "নাহবেমীর", "হেদায়াতুন্নাহু", "কাফিয়া", "শরহে বেকায়া"].map(cls => (
+                {["শিশু শ্রেণী", "১ম শ্রেণী", "২য় শ্রেণী", "৩য় শ্রেণী", "নাজেরা", "হিফজ খানা", "৪র্থ শ্রেণী", "তাইসির", "মিযান", "নাহবেমীর", "হেদায়াতুন্নাহু", "কাফিয়া", "শরহে বেকায়া"].map(cls => (
                   <SelectItem key={cls} value={cls}>{cls}</SelectItem>
                 ))}
               </SelectContent>
@@ -287,6 +289,26 @@ export default function StudentFilters() {
                 <SelectItem value="all">ক্যাটাগরি</SelectItem>
                 <SelectItem value="আবাসিক">আবাসিক</SelectItem>
                 <SelectItem value="অনাবাসিক">অনাবাসিক</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* ফ্রি */}
+          <div className="min-w-30 flex-1">
+            <Select 
+              defaultValue={searchParams.get("feeType") || "all"} 
+              onValueChange={(val) => handleFilter("feeType", val)}
+            >
+              <SelectTrigger className="h-9 bg-slate-50/50 text-xs border-blue-100">
+                <div className="flex items-center gap-1">
+                  <SelectValue placeholder="ফি এর ধরন" />
+                </div>
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">খোরাকীর পরিমান</SelectItem>
+                <SelectItem value="free">ফ্রি</SelectItem>
+                <SelectItem value="underOneThou">১০০০ অথবা কম</SelectItem>
+                <SelectItem value="underTwoThou">২০০০ অথবা কম</SelectItem>
               </SelectContent>
             </Select>
           </div>

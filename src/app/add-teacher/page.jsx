@@ -112,7 +112,6 @@ export default function TeacherForm() {
                                 <SelectContent>
                                     <SelectItem value="প্রধান শিক্ষক">প্রধান শিক্ষক</SelectItem>
                                     <SelectItem value="সহকারী শিক্ষক">সহকারী শিক্ষক</SelectItem>
-                                    <SelectItem value="মুহাদ্দিস">মুহাদ্দিস</SelectItem>
                                 </SelectContent>
                             </Select>
                             <input type="hidden" {...register("designation", { required: "পদবী আবশ্যক" })} />
@@ -120,8 +119,24 @@ export default function TeacherForm() {
 
                         <div className="space-y-2">
                             <Label>বিভাগ</Label>
-                            <Input {...register("department", { required: "বিভাগ আবশ্যক" })} placeholder="যেমন: কিতাব বা হিফজ" />
+                            <Select onValueChange={(v) => setValue("department", v)}>
+                                <SelectTrigger className="w-full">
+                                    <SelectValue placeholder="বিভাগ নির্বাচন করুন" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="মক্তব বিভাগ">মক্তব বিভাগ</SelectItem>
+                                    <SelectItem value="হিফজ বিভাগ">হিফজ বিভাগ</SelectItem>
+                                    <SelectItem value="কিতাব বিভাগ">কিতাব বিভাগ</SelectItem>
+                                </SelectContent>
+                            </Select>
+                            <input type="hidden" {...register("department", { required: "বিভাগ আবশ্যক" })} />
                         </div>
+
+
+                        {/* <div className="space-y-2">
+                            <Label>বিভাগ</Label>
+                            <Input {...register("department", { required: "বিভাগ আবশ্যক" })} placeholder="যেমন: কিতাব বা হিফজ" />
+                        </div> */}
 
                         {/* 4. ফোন ও এনআইডি */}
                         <div className="space-y-2">
