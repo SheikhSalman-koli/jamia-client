@@ -7,7 +7,10 @@ export const authOptions = {
     providers: [
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+            httpOptions: {
+                timeout: 10000, // Increase to 10 seconds
+            },
         })
     ],
 
@@ -23,15 +26,15 @@ export const authOptions = {
                         image: user.image,
                         googleId: user.id,
                         role: 'user',
-                        createdAt:new Date().toISOString()
+                        createdAt: new Date().toISOString()
                     }
 
-                    const {data} = await baseUrl.get(`/users/byemail?email=${userData.email}`)
+                    const { data } = await baseUrl.get(`/users/byemail?email=${userData.email}`)
 
-                    if(!data?.data){
+                    if (!data?.data) {
                         await baseUrl.post(`/users`, userData);
                     }
-                    
+
                     return true; // লগইন সাকসেস
                 } catch (error) {
                     console.error("Error saving user to DB:", error);
@@ -39,17 +42,17 @@ export const authOptions = {
             }
             return true;
         },
-  
+
         async session({ session }) {
             try {
                 // Fetch the latest user data from your DB using the email
                 const { data } = await baseUrl.get(`/users/byemail?email=${session?.user.email}`);
-                
+
                 if (data?.data) {
                     // Inject the role from your database into the session object
                     session.user.role = data.data.role;
                     // You can also inject the DB ID if you need it for marketplace ads
-                    session.user.id = data.data._id; 
+                    session.user.id = data.data._id;
                 }
             } catch (error) {
                 console.error("Error fetching role for session:", error);

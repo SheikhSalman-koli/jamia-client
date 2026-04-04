@@ -52,7 +52,7 @@ export default function TeacherForm() {
                 joiningDate: new Date().toISOString().split("T")[0]
             };
 
-              await baseUrl.post("/teachers", finalData);
+            await baseUrl.post("/teachers", finalData);
             // console.log(finalData);
             alert("শিক্ষকের তথ্য সফলভাবে সংরক্ষণ করা হয়েছে");
             reset();
@@ -277,10 +277,11 @@ export default function TeacherForm() {
 
                         {/* Submit Button */}
                         <div className="md:col-span-2 pt-4">
-                            <Button type="submit" className="w-full h-12 text-lg font-bold bg-blue-600 hover:bg-blue-700" disabled={isSubmitting}>
+                            <Button type="submit" className="w-full h-12 " disabled={isSubmitting}>
                                 {isSubmitting ? "সংরক্ষণ করা হচ্ছে..." : "শিক্ষক নিবন্ধন নিশ্চিত করুন"}
                             </Button>
                         </div>
+                      
                     </form>
                 </CardContent>
             </Card>
